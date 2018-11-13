@@ -6,3 +6,7 @@ But, before compiling, you have to comment this line on "NNet.h":<br>
    &nbsp;&nbsp;&nbsp;&nbsp; #define ARDUINONNET  &nbsp;&nbsp;&nbsp;  //uncomment if used on ARDUINO or comment if not<br>
 As a matter of fact, this define disable some features not availlable on Arduino environment (as save net on file) but usefull in other contexts.<br>
 Library comes with a couple of examples and an help.
+
+Zip file contains everything: Library, Examples and documentation.
+For immediate consulting, this directory contains unziped ardusumo sketch and pdf documentation.
+This directory contains also a short clip about Ardusumo behaviour driven by the sketch with Neural Network.
