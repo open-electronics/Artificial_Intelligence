@@ -1,0 +1,2 @@
+MNISTtest.exe
+pause

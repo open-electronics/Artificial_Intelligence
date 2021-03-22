@@ -1,0 +1,1 @@
+Library is same as Library for Arduino, just "#define ARDUINONNET" commented.

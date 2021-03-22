@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>NNet Library</title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://arduino.cc/en/favicon.png">
+  <link rel='stylesheet' href='arduinoWideRender.css' 
+type='text/css' />
+<!--HeaderText--><style type='text/css'>
+<!--
+  ul, ol, pre, dl, p {
+	margin-top:0px;
+	margin-bottom:0px;
+	text-align: justify;
+}
+  code { white-space: nowrap; }
+  .vspace { margin-top:1.33em; }
+  .indent { margin-left:40px; }
+  .outdent { margin-left:40px; text-indent:-40px; }
+  a.createlinktext { text-decoration:none; border-bottom:1px dotted gray; }
+  a.createlink { text-decoration:none; position:relative; top:-0.5em;
+    font-weight:bold; font-size:smaller; border-bottom:none; }
+  img { border:0px; }
+  .editconflict { color:green; 
+  font-style:italic; margin-top:1.33em; margin-bottom:1.33em; }
+
+  table.markup { border: 2px dotted #ccf; width:90%; }
+  td.markup1, td.markup2 { padding-left:10px; padding-right:10px; }
+  td.markup1 { border-bottom: 1px solid #ccf; }
+  div.faq { margin-left:2em; }
+  div.faq p.question { margin: 1em 0 0.75em -2em; font-weight:bold; }
+  div.faq hr { margin-left: -2em; }
+   
+    .frame 
+      { border:1px solid #cccccc; padding:4px; background-color:#f9f9f9; }
+    .lfloat { float:left; margin-right:0.5em; }
+    .rfloat { float:right; margin-left:0.5em; }
+a.varlink { text-decoration:none; }
+strong {
+	color: #D6D6D6;
+}
+
+-->
+</style><meta name='robots' content='index,follow' />
+
+  <meta name="verify-v1" content="TtxFIEJAB6zdJ509wLxjnapQzKAMNm9u0Wj4ho6wxIY=" />
+</head>
+<body>
+<div id="page">
+  <!--PageHeaderFmt-->
+  <div id="pageheader">
+<!--    <div class="title"><a href='http://arduino.cc/en'>Arduino</a></div> -->
+    <div class="title"><img src="img/logo.jpg"></div>
+  </div>
+  <!--/PageHeaderFmt-->
+
+  <!--PageLeftFmt-->
+  <div id="pagenav">
+    <div id="navbar">
+  	<p><a class='wikilink' href='http://arduino.cc/en/Main/Buy'>Buy</a>
+<a class='wikilink' href='http://arduino.cc/en/Main/Software'>Download</a>
+<a class='wikilink' href='http://arduino.cc/en/Guide/HomePage'>Getting Started</a>
+<a class='wikilink' href='http://arduino.cc/en/Tutorial/HomePage'>Learning</a>
+<a class='wikilink' href='http://arduino.cc/en/Reference/HomePage'>Reference</a>
+<a class='wikilink' href='http://arduino.cc/en/Main/Hardware'>Hardware</a>
+<a class='wikilink' href='http://arduino.cc/en/Main/FAQ.html'>FAQ</a>
+</p>
+<p class='vspace'></p>
+
+    </div>
+  </div>
+  <!--/PageLeftFmt-->
+
+  <div id="pagetext">
+  <!--PageText-->
+<div id='wikitext'>
+<p>&nbsp;</p>
+<p style="color:#06C; font-size:24px " ><a href="NNet.html">Back to Library</a></p>
+<p style="color:#06C; font-size:24px " ><a href="Examples.html">Back to examples list</a></p>
+<h2>XOR function simulation</h2>
+<p>Like &quot;Hello world&quot; printed as first example of a new programming language explanation, XOR function is the basic test for a feed forward Neural Network implementation. XOR function is favourite because is simple but   non-linear classification problem. In other words, it is impossible to group input that produce 0  and to group  input that produce 1 separately, without any form of space distortion (i.e. non- linearity).</p>
+<p><img src="img/XOR.jpg" width="922" height="280" /></p>
+<p>The Tanh function on hidden layer is responsible for space distortion and the last layer projects this new points arrangement to the correct result.</p>
+<p>Example of sketch for XOR learning:</p>
+<pre style="line-height:normal; color: #D6D6D6; border:double">
+<strong style="font-size:18px"><font color="#5e6d03">#include</font> <font color="#005c5f">&#34;NNet.h&#34;</font> </strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47;include library</font>
+
+<font color="#00979c">float</font> <font color="#000000">fxor</font><font color="#000000">[</font><font color="#000000">4</font><font color="#000000">]</font><font color="#000000">[</font><font color="#000000">3</font><font color="#000000">]</font><font color="#434f54">=</font><font color="#000000">{</font><font color="#000000">{</font><font color="#000000">0</font><font color="#434f54">,</font><font color="#000000">0</font><font color="#434f54">,</font><font color="#000000">0</font><font color="#000000">}</font><font color="#434f54">,</font><font color="#000000">{</font><font color="#000000">0</font><font color="#434f54">,</font><font color="#000000">1</font><font color="#434f54">,</font><font color="#000000">1</font><font color="#000000">}</font><font color="#434f54">,</font><font color="#000000">{</font><font color="#000000">1</font><font color="#434f54">,</font><font color="#000000">0</font><font color="#434f54">,</font><font color="#000000">1</font><font color="#000000">}</font><font color="#434f54">,</font><font color="#000000">{</font><font color="#000000">1</font><font color="#434f54">,</font><font color="#000000">1</font><font color="#434f54">,</font><font color="#000000">0</font><font color="#000000">}</font><font color="#000000">}</font><font color="#000000">;</font> <font color="#434f54">&#47;&#47; XOR function to emulate</font>
+
+<strong style="font-size:18px"><font color="#000000">NNet</font> <font color="#000000">net</font><font color="#000000">(</font><font color="#000000">2</font><font color="#434f54">,</font><font color="#000000">2</font><font color="#434f54">,</font><font color="#005c5f">&#34;NodeTanh&#34;</font><font color="#434f54">,</font><font color="#000000">1</font><font color="#434f54">,</font><font color="#005c5f">&#34;NodeLin&#34;</font><font color="#000000">)</font><font color="#000000">;</font></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47;NN instance</font>
+
+<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">9600</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#005c5f">&#34;Test NNet train V25\n&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">samples</font><font color="#434f54">=</font><font color="#000000">40000</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; number of training cycles</font>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#005c5f">&#34;NNet train for &#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#000000">samples</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34; samples...&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">trainxor</font><font color="#000000">(</font><font color="#000000">samples</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; training </font>
+ &nbsp;<strong style="font-size:18px"><font color="#0000">net</font><font color="#434f54">.</font><font color="#000000">printPROGMEM();</font></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; save NN trained for further use</font>
+<font color="#000000">}</font>
+
+<font color="#00979c">void</font> <font color="#000000">trainxor</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">samples</font><font color="#000000">)</font>
+<font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#00979c">float</font> <font color="#000000">vin</font><font color="#000000">[</font><font color="#000000">2</font><font color="#000000">]</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; input buffer</font>
+ &nbsp;&nbsp;&nbsp;<font color="#00979c">float</font> <font color="#000000">vtr</font><font color="#000000">[</font><font color="#000000">1</font><font color="#000000">]</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; train out buffer</font>
+ &nbsp;&nbsp;&nbsp;<font color="#00979c">float</font> <font color="#000000">errq</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#00979c">int</font> <font color="#000000">k</font><font color="#434f54">=</font><font color="#000000">samples</font><font color="#434f54">&#47;</font><font color="#000000">10</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; step for error displaing (10 steps)</font>
+ &nbsp;&nbsp;&nbsp;<font color="#00979c">char</font> <font color="#000000">sfloat</font><font color="#000000">[</font><font color="#000000">12</font><font color="#000000">]</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">for</font> <font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">i</font><font color="#434f54">=</font><font color="#000000">1</font><font color="#000000">;</font><font color="#000000">i</font><font color="#434f54">&lt;</font><font color="#000000">samples</font><font color="#000000">;</font><font color="#000000">i</font><font color="#434f54">++</font><font color="#000000">)</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; training cycles</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00979c">int</font> <font color="#000000">r</font><font color="#434f54">=</font><font color="#d35400">random</font><font color="#000000">(</font><font color="#000000">0</font><font color="#434f54">,</font><font color="#000000">4</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; show examples in a random sequence</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">vin</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">]</font><font color="#434f54">=</font><font color="#000000">fxor</font><font color="#000000">[</font><font color="#000000">r</font><font color="#000000">]</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">]</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">vin</font><font color="#000000">[</font><font color="#000000">1</font><font color="#000000">]</font><font color="#434f54">=</font><font color="#000000">fxor</font><font color="#000000">[</font><font color="#000000">r</font><font color="#000000">]</font><font color="#000000">[</font><font color="#000000">1</font><font color="#000000">]</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">vtr</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">]</font><font color="#434f54">=</font><font color="#000000">fxor</font><font color="#000000">[</font><font color="#000000">r</font><font color="#000000">]</font><font color="#000000">[</font><font color="#000000">2</font><font color="#000000">]</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong style="font-size:18px"><font color="#000000">errq</font><font color="#434f54">=</font><font color="#000000">errq</font><font color="#434f54">+</font><font color="#000000">net</font><font color="#434f54">.</font><font color="#000000">learn</font><font color="#000000">(</font><font color="#000000">vin</font><font color="#434f54">,</font><font color="#000000">vtr</font><font color="#000000">)</font><font color="#000000">;</font> </strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; learning</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">dtostrf</font><font color="#000000">(</font><font color="#000000">errq</font><font color="#434f54">,</font><font color="#000000">6</font><font color="#434f54">,</font><font color="#000000">5</font><font color="#434f54">,</font><font color="#000000">sfloat</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#5e6d03">if</font> <font color="#000000">(</font><font color="#000000">i</font><font color="#434f54">%</font><font color="#000000">k</font><font color="#434f54">==</font><font color="#000000">0</font><font color="#000000">)</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; for each step show error average</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">{</font><font color="#000000">errq</font><font color="#434f54">=</font><font color="#000000">errq</font><font color="#434f54">&#47;</font><font color="#000000">k</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">sprintf</font><font color="#000000">(</font><font color="#000000">rec</font><font color="#434f54">,</font><font color="#005c5f">&#34;%d Errq: %s \n&#34;</font><font color="#434f54">,</font><font color="#000000">i</font><font color="#434f54">,</font><font color="#000000">sfloat</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#000000">rec</font><font color="#000000">)</font><font color="#000000">;</font><font color="#000000">errq</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">showXorFun</font><font color="#000000">(</font><font color="#000000">)</font><font color="#000000">;</font><font color="#000000">}</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; and the complete results</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+<font color="#000000">}</font>
+
+<font color="#00979c">void</font> <font color="#000000">showXorFun</font><font color="#000000">(</font><font color="#000000">)</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; show the learned functionality of NN</font>
+<font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;<font color="#00979c">float</font> <font color="#000000">vin</font><font color="#000000">[</font><font color="#000000">2</font><font color="#000000">]</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#00979c">float</font> <font color="#000000">vout</font><font color="#000000">[</font><font color="#000000">1</font><font color="#000000">]</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#00979c">float</font> <font color="#000000">trn</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#00979c">int</font> <font color="#000000">err</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#00979c">char</font> <font color="#000000">sfloat</font><font color="#000000">[</font><font color="#000000">12</font><font color="#000000">]</font><font color="#000000">;</font>
+
+ &nbsp;&nbsp;&nbsp;<font color="#5e6d03">for</font><font color="#000000">(</font><font color="#00979c">int</font> <font color="#000000">i</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font><font color="#000000">i</font><font color="#434f54">&lt;</font><font color="#000000">4</font><font color="#000000">;</font><font color="#000000">i</font><font color="#434f54">++</font><font color="#000000">)</font> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; for each of 4 couple of inputs</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">{</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">vin</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">]</font><font color="#434f54">=</font><font color="#000000">fxor</font><font color="#000000">[</font><font color="#000000">i</font><font color="#000000">]</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">]</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">vin</font><font color="#000000">[</font><font color="#000000">1</font><font color="#000000">]</font><font color="#434f54">=</font><font color="#000000">fxor</font><font color="#000000">[</font><font color="#000000">i</font><font color="#000000">]</font><font color="#000000">[</font><font color="#000000">1</font><font color="#000000">]</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">trn</font><font color="#434f54">=</font><font color="#000000">fxor</font><font color="#000000">[</font><font color="#000000">i</font><font color="#000000">]</font><font color="#000000">[</font><font color="#000000">2</font><font color="#000000">]</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong style="font-size:18px"><font color="#000000">net</font><font color="#434f54">.</font><font color="#000000">forw</font><font color="#000000">(</font><font color="#000000">vin</font><font color="#434f54">,</font><font color="#000000">vout</font><font color="#000000">)</font><font color="#000000">;</font> </strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; compute Neural Network</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00979c">int</font> <font color="#000000">in0</font><font color="#434f54">=</font> <font color="#000000">vin</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">]</font><font color="#434f54">&gt;</font><font color="#000000">0.5</font><font color="#434f54">?</font><font color="#000000">1</font><font color="#434f54">:</font><font color="#000000">0</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00979c">int</font> <font color="#000000">in1</font><font color="#434f54">=</font> <font color="#000000">vin</font><font color="#000000">[</font><font color="#000000">1</font><font color="#000000">]</font><font color="#434f54">&gt;</font><font color="#000000">0.5</font><font color="#434f54">?</font><font color="#000000">1</font><font color="#434f54">:</font><font color="#000000">0</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#00979c">int</font> <font color="#000000">ou</font><font color="#434f54">=</font> <font color="#000000">vout</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">]</font><font color="#434f54">&gt;</font><font color="#000000">0.5</font><font color="#434f54">?</font><font color="#000000">1</font><font color="#434f54">:</font><font color="#000000">0</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">err</font><font color="#434f54">=</font><font color="#000000">err</font><font color="#434f54">+</font><font color="#d35400">fabs</font><font color="#000000">(</font><font color="#000000">trn</font><font color="#434f54">-</font><font color="#000000">ou</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#000000">dtostrf</font><font color="#000000">(</font><font color="#000000">vout</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">]</font><font color="#434f54">,</font><font color="#000000">6</font><font color="#434f54">,</font><font color="#000000">5</font><font color="#434f54">,</font><font color="#000000">sfloat</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#d35400">sprintf</font><font color="#000000">(</font><font color="#000000">rec</font><font color="#434f54">,</font><font color="#005c5f">&#34; &nbsp;&nbsp;&nbsp;&nbsp;%d %d -&gt; %d &nbsp;(%s)\n&#34;</font><font color="#434f54">,</font><font color="#000000">in0</font><font color="#434f54">,</font><font color="#000000">in1</font><font color="#434f54">,</font><font color="#000000">ou</font><font color="#434f54">,</font><font color="#000000">sfloat</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#000000">rec</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;&nbsp;&nbsp;<font color="#000000">}</font>
+<font color="#000000">}</font>
+
+<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#434f54">&#47;&#47; not used</font>
+<font color="#000000">}</font>
+</pre>
+<p>You can train NN on Arduino because it is a task not so hard (from 20000 to 50000 training cycles depending on random weights initialization). You can find a similar sketch into the example subdirectory of library.</p>
+<p>Then if you want use NN trained and saved, this is an example of sketch:</p>
+<pre style="line-height:normal; color: #D6D6D6; border:double">
+<strong style="font-size:18px"><font color="#5e6d03">#include</font> <font color="#005c5f">&#34;NNet.h&#34;</font></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47;include library</font>
+
+<strong><font color="#00979c">const</font> <font color="#00979c">PROGMEM</font> <font color="#00979c">struct</font></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#434f54">&#47;&#47; NN description previously saved</font>
+<strong><font color="#000000">{</font>
+ <font color="#00979c">int</font> <font color="#000000">dimin</font><font color="#434f54">=</font><font color="#000000">2</font><font color="#000000">;</font>
+ <font color="#00979c">int</font> <font color="#000000">dimhi</font><font color="#434f54">=</font><font color="#000000">2</font><font color="#000000">;</font>
+ <font color="#00979c">int</font> <font color="#000000">dimou</font><font color="#434f54">=</font><font color="#000000">1</font><font color="#000000">;</font>
+ <font color="#00979c">int</font> <font color="#000000">fun1</font><font color="#434f54">=</font><font color="#000000">2</font><font color="#000000">;</font>
+ <font color="#00979c">int</font> <font color="#000000">fun2</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font>
+ <font color="#00979c">float</font> <font color="#000000">wgt10</font><font color="#000000">[</font><font color="#000000">2</font><font color="#000000">]</font><font color="#000000">[</font><font color="#000000">2</font><font color="#000000">]</font><font color="#434f54">=</font>
+ <font color="#000000">{</font><font color="#000000">{</font><font color="#434f54">-</font><font color="#000000">0.45</font><font color="#434f54">,</font> <font color="#434f54">-</font><font color="#000000">0.45</font><font color="#000000">}</font><font color="#434f54">,</font><font color="#000000">{</font><font color="#434f54">-</font><font color="#000000">1.89</font><font color="#434f54">,</font> <font color="#434f54">-</font><font color="#000000">1.90</font><font color="#000000">}</font><font color="#000000">}</font><font color="#000000">;</font>
+ <font color="#00979c">float</font> <font color="#000000">wgt21</font><font color="#000000">[</font><font color="#000000">1</font><font color="#000000">]</font><font color="#000000">[</font><font color="#000000">2</font><font color="#000000">]</font><font color="#434f54">=</font>
+ <font color="#000000">{</font><font color="#000000">{</font><font color="#000000">1.54</font><font color="#434f54">,</font> <font color="#434f54">-</font><font color="#000000">1.50</font><font color="#000000">}</font><font color="#000000">}</font><font color="#000000">;</font>
+<font color="#000000">}</font><font color="#000000">pnet</font><font color="#000000">;</font></strong>
+
+
+
+<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">9600</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#005c5f">&#34;Verify XOR functionality (NNlib 2.5)\n&#34;</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">float</font> <font color="#000000">vin</font><font color="#000000">[</font><font color="#000000">2</font><font color="#000000">]</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">float</font> <font color="#000000">vout</font><font color="#000000">[</font><font color="#000000">1</font><font color="#000000">]</font><font color="#000000">;</font>
+ &nbsp;<strong style="font-size:18px"><font color="#000000">NNPGM np;                                    </font></strong><font color="#434f54">&#47;&#47; np: pointer to NN PROGMEM structure</font>
+ <strong style="font-size:18px"><font color="#000000"> np=NNet::initNetPROGMEM(&amp;pnet,false,false);  </font></strong><font color="#434f54">&#47;&#47; Initialize NN structure PROGMEM</font>
+ &nbsp;<font color="#000000">vin</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">]</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font><font color="#000000">vin</font><font color="#000000">[</font><font color="#000000">1</font><font color="#000000">]</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font><strong style="font-size:18px"><font color="#000000">NNet</font><font color="#434f54">:</font><font color="#434f54">:</font><font color="#000000">forwPROGMEM</font><font color="#000000">(</font><font color="#434f54"></font><font color="#000000">np</font><font color="#434f54">,</font><font color="#000000">vin</font><font color="#434f54">,</font><font color="#000000">vout</font><font color="#000000">)</font><font color="#000000">;</font></strong>    <font color="#434f54">&#47;&#47; NN use (static function)</font>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#005c5f">&#34;0 0 -&gt; &#34;</font><font color="#000000">)</font><font color="#000000">;</font><b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(round(</font><font color="#000000">vout</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">])</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">vin</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">]</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font><font color="#000000">vin</font><font color="#000000">[</font><font color="#000000">1</font><font color="#000000">]</font><font color="#434f54">=</font><font color="#000000">1</font><font color="#000000">;</font><strong style="font-size:18px"><font color="#000000">NNet</font><font color="#434f54">:</font><font color="#434f54">:</font><font color="#000000">forwPROGMEM</font><font color="#000000">(</font><font color="#434f54"></font><font color="#000000">np</font><font color="#434f54">,</font><font color="#000000">vin</font><font color="#434f54">,</font><font color="#000000">vout</font><font color="#000000">)</font><font color="#000000">;</font></strong>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#005c5f">&#34;0 1 -&gt; &#34;</font><font color="#000000">)</font><font color="#000000">;</font><b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(round(</font><font color="#000000">vout</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">]</font><font color="#000000">))</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">vin</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">]</font><font color="#434f54">=</font><font color="#000000">1</font><font color="#000000">;</font><font color="#000000">vin</font><font color="#000000">[</font><font color="#000000">1</font><font color="#000000">]</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font><strong style="font-size:18px"><font color="#000000">NNet</font><font color="#434f54">:</font><font color="#434f54">:</font><font color="#000000">forwPROGMEM</font><font color="#000000">(</font><font color="#434f54"></font><font color="#000000">np</font><font color="#434f54">,</font><font color="#000000">vin</font><font color="#434f54">,</font><font color="#000000">vout</font><font color="#000000">)</font><font color="#000000">;</font></strong>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#005c5f">&#34;1 0 -&gt; &#34;</font><font color="#000000">)</font><font color="#000000">;</font><b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#000000">round(vout</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">])</font><font color="#000000">)</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">vin</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">]</font><font color="#434f54">=</font><font color="#000000">1</font><font color="#000000">;</font><font color="#000000">vin</font><font color="#000000">[</font><font color="#000000">1</font><font color="#000000">]</font><font color="#434f54">=</font><font color="#000000">1</font><font color="#000000">;</font><strong style="font-size:18px"><font color="#000000">NNet</font><font color="#434f54">:</font><font color="#434f54">:</font><font color="#000000">forwPROGMEM</font><font color="#000000">(</font><font color="#434f54"></font><font color="#000000">np</font><font color="#434f54">,</font><font color="#000000">vin</font><font color="#434f54">,</font><font color="#000000">vout</font><font color="#000000">)</font><font color="#000000">;</font></strong>
+ &nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">print</font><font color="#000000">(</font><font color="#005c5f">&#34;1 1 -&gt; &#34;</font><font color="#000000">)</font><font color="#000000">;</font><b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">println</font><font color="#000000">(</font><font color="#000000">round(vout</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">])</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+
+<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;<font color="#434f54">&#47;&#47; not used</font>
+<font color="#000000">}</font>
+
+</pre>
+<p>&nbsp;</p>
+<h3>&nbsp;</h3>
+<p class='vspace'><!--PageFooterFmt--></p>
+<tr><td  width='55%' valign='top' class="createlink"><div id="pagefooter">
+  &copy;Arduino | 
+  <a href='#'>Edit Page</a> | <a href='#'>Page History</a> | <a href='#' target='_blank'>Printable View</a> | <a href='http://arduino.cc/en/Site/AllRecentChanges'>All Recent Site Changes</a>
+</div>
+  <!--/PageFooterFmt-->
+  
+</body>
+</html>

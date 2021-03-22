@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>NNet Library</title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://arduino.cc/en/favicon.png">
+  <link rel='stylesheet' href='arduinoWideRender.css' 
+type='text/css' />
+<!--HeaderText--><style type='text/css'>
+<!--
+  ul, ol, pre, dl, p {
+	margin-top:0px;
+	margin-bottom:0px;
+	text-align: justify;
+}
+  code { white-space: nowrap; }
+  .vspace { margin-top:1.33em; }
+  .indent { margin-left:40px; }
+  .outdent { margin-left:40px; text-indent:-40px; }
+  a.createlinktext { text-decoration:none; border-bottom:1px dotted gray; }
+  a.createlink { text-decoration:none; position:relative; top:-0.5em;
+    font-weight:bold; font-size:smaller; border-bottom:none; }
+  img { border:0px; }
+  .editconflict { color:green; 
+  font-style:italic; margin-top:1.33em; margin-bottom:1.33em; }
+
+  table.markup { border: 2px dotted #ccf; width:90%; }
+  td.markup1, td.markup2 { padding-left:10px; padding-right:10px; }
+  td.markup1 { border-bottom: 1px solid #ccf; }
+  div.faq { margin-left:2em; }
+  div.faq p.question { margin: 1em 0 0.75em -2em; font-weight:bold; }
+  div.faq hr { margin-left: -2em; }
+   
+    .frame 
+      { border:1px solid #cccccc; padding:4px; background-color:#f9f9f9; }
+    .lfloat { float:left; margin-right:0.5em; }
+    .rfloat { float:right; margin-left:0.5em; }
+a.varlink { text-decoration:none; }
+strong {
+	color: #000;
+}
+
+-->
+</style>  <meta name='robots' content='index,follow' />
+
+  <meta name="verify-v1" content="TtxFIEJAB6zdJ509wLxjnapQzKAMNm9u0Wj4ho6wxIY=" />
+</head>
+<body>
+<div id="page">
+  <!--PageHeaderFmt-->
+  <div id="pageheader">
+<!--    <div class="title"><a href='http://arduino.cc/en'>Arduino</a></div> -->
+    <div class="title"><img src="img/logo.jpg"></div>
+  </div>
+  <!--/PageHeaderFmt-->
+
+  <!--PageLeftFmt-->
+  <div id="pagenav">
+    <div id="navbar">
+  	<p><a class='wikilink' href='http://arduino.cc/en/Main/Buy'>Buy</a>
+<a class='wikilink' href='http://arduino.cc/en/Main/Software'>Download</a>
+<a class='wikilink' href='http://arduino.cc/en/Guide/HomePage'>Getting Started</a>
+<a class='wikilink' href='http://arduino.cc/en/Tutorial/HomePage'>Learning</a>
+<a class='wikilink' href='http://arduino.cc/en/Reference/HomePage'>Reference</a>
+<a class='wikilink' href='http://arduino.cc/en/Main/Hardware'>Hardware</a>
+<a class='wikilink' href='http://arduino.cc/en/Main/FAQ.html'>FAQ</a>
+</p>
+<p class='vspace'></p>
+
+    </div>
+  </div>
+  <!--/PageLeftFmt-->
+
+  <div id="pagetext">
+  <!--PageText-->
+<div id='wikitext'>
+<p>&nbsp;</p>
+<h2>NNet Library</h2>
+<div style="position:relative; left:80%; top:-20%;border:2px solid #900;width:150px; height:50px; text-align:center"> <a href="Examples.html">
+  <bold style="font-size: 24px; color:#03C"  >Examples</bold>
+  </a></div>
+<p class='vspace'>Version 3.0 (for Arduino and others microcontrollers/microcomputers)</p><table >
+  <p>Neural Network (short for Artificial Neural Network : ANN or simply NN) is a framework for machine learning algorithms. The best-known algorithm for Neural Network (or Neural Network model) is the feed-forward Neural Network that is trained
+    in a supervised way by the Error Back Propagation process. Despite its origin has been stimulated by emulation of some brain functionality 
+    (as neuron cells), NN can be substantially see as a statistical machine. So, you can train a sort of black box 
+  and use it later.</p>
+  <p><img src="img/BlackBox.jpg" width="457" height="151" /></p>
+  <p>Can NN be used on  Arduino environment? Yes and not. On &quot;Arduino Uno&quot; memory (RAM) is very poor, and NN is composed by several nodes and links. All these components mean several bytes. For this reason, it is a critical task to use NN on Arduino basic model. In contrast to previous NN library version (2.5) this library is not optimized for Arduino Uno and  uses memory buffers for layers. So, it is more consuming in terms of RAM but it is faster in terms of computation. The target of this library is a microcontroller or microcomputer with quite memory RAM (&gt; 50/100k). But it also possible to use a NN, previously trained on a computer, using PROGMEM on Arduino Uno. In fact, like NNlib 2.5 , you can save a NN trained on file (or console) in this format and put this structure on a Arduino sketch. But, in this library version, the NN described in a PROGMEM structure, has to be initialized because library must allocate memory for hidden layer, at least. Obviously you can use this library directly on Arduino Uno in standard format (also weights in RAM) but for very small structures. </p>
+  <p>This library is provided for classical feed-forward Neural Networks. It is not conceived for deep-learn tasks, but can be useful for a lot of problems that not need  these complex structures (as convolution network or complex recurent networks). Deep learning structures can be managed by complex frameworks (like Keras, et al.) that, however, presume you use a powerful microcomputer. This library can use RMSprop optimizer for gradient descent procedure (EBP). In addition, this library allows you to define a context memory (Elman memory type) for a sort of recurrent NN, but just for historical and experimental tasks. For real recurrent NN, the new LSTM or GRU structures are surely much more performing, even if much more RAM demanding. </p>
+  <p>Actually, this library consider also the possibility to link  NNs in a serial way. For this purpose, a couple of functions propagate gradient error into input buffer (overwritten). These gradient values can be used to link gradient error to a previous NN, in a complex structure of consecutive modules. This feature is provided to allow NN structures bigger than 2 layers, but, again, in case of real complex structure, the deep-learning frameworks are advisable.</p>
+  <p><img src="img/Structure.jpg" width="775" height="148" /></p>
+  <p><img src="img/ActivationFun.jpg" width="579" height="222" /></p>
+<p>Summary of features:</p>
+  <ul>
+    <li>Two layers + input buffer fully connected by trainable weighted links + output buffer or train buffer.</li>
+    <li>Bias parameters (trainable) available. If not used (def.) no memory occupied.</li>
+    <li>6 activaction functions available: Linear, Sigmoid, Tanh, ReLU, Softmax.</li>
+    <li>EBP with RMSprop optimizer method (def.)</li>
+    <li>Context memory availlable. If not used (def.) no memory occupied.</li>
+    <li>Stack of  NNs possible.</li>
+    <li>It is possible to save trained NN in PROGMEM format.</li>
+  </ul>
+  <p>&nbsp;</p>
+<p>Use NN library V3.0  to do what? For example:</p>
+  <ul>
+    <li>To use NN black box as continuous function, even if complex, not linear and multi-dimensional.</li>
+    <li>To use it as  non linear control system (in place of traditional PID)</li>
+    <li>To react to sensors in a complex and continuous way (for example to drive motors)</li>
+    <li>To classify sensors inputs in several classes (with softmax function)</li>
+    <li>To detect a particular condition (i.e. alarm) depending on complex and statistical input.</li>
+  </ul>
+  <p>&nbsp;</p>
+  <p>On Arduino NN library folder there are some examples using NNlib on Arduino environment. But in a folder NNlib4PC there is a implementation of the well known test MNIST. Because its big NN dimension, it can't run on Arduino basic version. MNIST is a standard benchmark for feed-forward NN. It consists of 60000 handwritten examples for training and 10000 examples for final test. Each example is a picture of 28x28 pixels representing a digit, so, the input buffer is 784 nodes wide, and the output layer has to classify the  digit represented in ten classes. A NN of 784+100+10 nodes is trained for 100 cycles (60000 images each) and the final test (on different 10000 images) shows an accuracy of 96.8%. (More information about MNIST standard benchmark can be found on Internet)</p>
+  <p>See <a href="Examples.html">
+  <bold style="font-size: 24px; color:#03C"  >Examples</bold>
+  </a> for more informations.</p>
+  <p>&nbsp;</p>
+<tr><td  width='55%' valign='top' class="createlink"><p>
+    NNet library contains simplified functions to create, load, train and use a basical Neural Network. </p>
+    <p>Example. To create and train NN:</p>
+    <p><code><strong>NNet net(2,4,"NodeTanh",1,"NodeSigm");</strong> //create NN 2+4+1<br />
+             for (int n=0;n&lt;totcycles;n++)<br />
+             {<br />
+              &nbsp; inp[0]=... // set input<br />
+              &nbsp; inp[1]=... // set input<br />
+              &nbsp; trn[0]=... // set correct result<br />
+              &nbsp; <strong>float errq=net.<span style="color:#F00">learn</span>(inp,trn);</strong> //train step<br />
+             }<br /></code>
+<p>Example. To use NN:</p>
+<p><code><strong>NNet net("SavedNN.txt");</strong> //load NN (supposed saved on "SavedNN.txt" file)<br />
+    inp[0]=... // set input<br />
+    inp[1]=... // set input<br />
+    <strong>net.<span style="color:#F00">forw</span>(inp,out);</strong> //into out buffer there is the NN result<br />
+  </code></p>
+    <p>&nbsp;</p>
+  <p>As we have seen, you can use NN into program memory when you are using  library on Arduino Uno, to reduce RAM usage just for input,output and hidden layer. Hidden layer buffer is created when you initialize the NN. If you want even more reduce memory usage, you can use NNlib V2.5, because, in this optimized library version, hidden layer buffer is not used (hidden layer is simulated by repeated calculation).</p>
+  <p>&nbsp;</p>
+<p>For example if a neural network (2,2,1) is loaded in flash program memory as: </p>
+  <p><code>const PROGMEM struct <br />
+    {<br />
+    int dimin=2;<br />
+    int dimhi=2;<br />
+    int dimou=1;<br />
+    int fun1=2;<br />
+    int fun2=0;<br />
+    float wgt10[2][2]=<br />
+    {{-0.45, -0.45},{-1.89, -1.90}};<br />
+    float wgt21[1][2]=<br />
+    {{1.54, -1.50}};<br />
+    }pnet;</code></p>
+  <p>you have tu initialize it using static function: NNPGM nnp=NNet::initNetPROGMEM(&amp;pnet,false ,false);</p>
+  <p>and then, you can use it with the static function:     NNet::forwPROGMEM(nnp,input,output) ;</p>
+  <p>Where input[2] and output[1] are  buffers provided by the user, and nnp is a pointer returned by initNet() function.</p>
+  <p>(in the initNet() function the last two parameters specify NN without bias and context memory)</p>
+  <p><a name="intro"></a>    </p>
+<p>This library can be used on Arduino or on PC (or others micro environments). But if you want use library on PC you have to  comment this define:<div style="color:#0C0">#define ARDUINONNET</div>
+  </p>This statement specializes some functions as print() or forwPROGMEM() for Arduino environment.
+  <h3 style="font-size:28px" >Library functions</h3>
+  <h3>First of all, instance:</h3>
+  <p>Include library, then instance class by two ways:
+    <ol>1) a new random NN to train</ol>
+  <ol>2) a trained and well defined NN for using it</ol>
+  </p>
+  <h3>New NN</h3>
+  <p><strong>NNet(int L0n, int L1n, const char* L1Type, int L2n, const char* L2Type);</strong></p>
+  <p>L0n : number of nodes for L0 (input buffer);<br />
+    L1n : number of nodes for L1 (hidden layer)<br />
+    L1Type: name of defined activation function for layer 1<br />
+    L2n : number of nodes for L2 (otput layer)<br />
+    L2Type: name of defined activation function for layer 2<br />
+    Activation functions names:
+    <ul>
+      <li>"NodeLin"</li>
+      <li>"NodeSigm"</li>
+      <li>"NodeTanh"</li>
+      <li>"NodeReLU"</li>
+      <li>&quot;NodeSmax&quot;</li>
+    </ul>
+    <p>Ex.: NNet net(2,2,"NodeTanh",1,"NodeLin");
+    </p>
+    </p>
+    <p>Or</p>
+    <p><strong>NNet(int L0n, int L1n, const char* L1Type, int L2n, const char* L2Type, bool bias, bool mem);</strong> </p>
+    <p>Where:</p>
+    <p>bias: if true create bias parameter on each net node</p>
+    <p>mem: if true create context memory</p>
+    <p>&nbsp;</p>
+    <h3>Load trained NN</h3> 
+  <p><strong>NNet(char netdef[]);<br />
+    or <br />
+    NNet(const char* filename); </strong></p>
+  <p>Example of definition by string or by records of file: </p>
+  
+  <pre>char* netdef=
+    "L0 2 "                      //layer 0 with 2 nodes
+    "L1 2 NodeTanh "             //layer 1 with 2 nodes NodeTanh
+    "HLW0 -2.3404 -2.3427 "      //HiddenLayerWeightsOfnode0 valfromN0ofL0 ...
+    "HLW1 0.4820 0.4669 "        //  "       "    "        1    "        " ...
+    "L2 1 NodeLin "              //layer 2 with 1 node NodeLin
+    "OLW0 -2.3558 -3.0901 ";     //OutputLayerWeightsOfnode0 valfromN0ofL1 ...
+NB. Always separate tokens  with spaces ! (even if it's the last one in the line)
+</pre>
+  
+  <h3>Loading NN in flash memory (Arduino only)</h3>
+  <p>Trained NN can be printed or saved on file, as C struct using functions:</p>
+  <p><strong>printPROGMEM();</strong></p>
+  <p><strong>savePROGMEM(char* nomefile);</strong></p>
+  <p>Just put this struct in your Arduino sketch.</p>
+  <h3>Train or use NN</h3>
+  <h3>Train NN</h3> 
+  <p><strong>float learn(float inp[],float train[]);</strong></p>
+  <p>
+    inp: array of input values to transmit to NN<br />
+    train: array of correct output values NN has to learn<br />
+    Function returns the squared error.</p>
+  <p>N.B. Train buffer is overwritten. Don't use it without reloading.<br />
+    Ex.: float err=net.learn(inp,trn);
+  </p>
+  <p><div style="color:#696">Learning coefficient:</div> 
+  <p><strong>void setLearnCoeff(float lcf);</strong> //def.: 0.01</p>
+  <p><strong>void setRMSpOptimizer(bool y);</strong> //set RMSprop optimizer (def: true)</p>
+  <p>
+    </p>
+  </p>
+  <h3>Use NN</h3> 
+  <p><strong>void forw(float inp[],float out[]);</strong></p> 
+  <p>
+    inp: array of input values to transmit to NN<br />
+    out: array that receives output values from NN<br />
+    Ex.: net.forw(inp,out);
+    </p>
+  <p>&nbsp;</p>
+  <h3>Use NN loaded in flash memory</h3>
+  <p>First of all initialize NN</p>
+  <p><strong>NNPGM NNet::initNetPROGMEM(void* net,bool fbias,bool fmem);</strong></p>
+  <p>net: pointer to struct in flash memory</p>
+  <p>fbias: if NN has bias</p>
+  <p>fmem: if NN has mem</p>
+  <p>Ex.: nnp=NNet::initNetPROGMEM(&amp;pnet,false ,false);</p>
+  <p>&nbsp;</p>
+  <p>Then you can use it</p>
+  <p><strong>void NNet::forwPROGMEM(NNPGM nnp,float inp[],float out[]);</strong></p>
+<p>nnp is the pointer returned by initNetPROGMEM</p>
+<p>Ex.:NNet::forwPROGMEM(nnp,input,output) ;</p>
+  <h3>Services</h3>
+  <p><strong>
+    print(); <br />
+    save(char* filename); <br />
+    savexardu(char* filename);</strong>(save as string on file) </p>
+  <p>&nbsp;</p>
+  <h3>Additional functions</h3>
+  <p>For concatenated NN training we can use a couple of different learning function.</p>
+<p>First function has to be used for the last NN in the chain:</p>
+  <p><strong>float learnpropagate(float inp[],float train[]);</strong></p>
+  <p>This function is similar to learn() function, but int this case the input buffer is overwritten by back propagate error gradient.</p>
+  <p>To use this error gradient on previous NN you have to utilize this function:</p>
+  <p><strong>float backlearn(float inp[],float bkerr[]);</strong></p>
+  <p>bkerr buffer has to be filled by back propagate error gradient.</p>
+  <p>Again, inp buffer will be overwritten by the new back propagate gradient error that you can use if a previous linked NN exists.</p>
+  <p>&nbsp;</p>
+  <p>For the forward function in a chain of NN you just put result of the first NN into the input of second and so on...</p>
+  <p>&nbsp;</p>
+<h3>Utilities</h3>
+  <p><strong>int getnnodes(int layer);</strong> // return node number for layer(layer:0/1/2) </p>
+  <p><strong>void getHiddenOut(float out[],int dimhid);</strong>// return hidden value on out buffer<br />
+    <strong>void getNetOut(float out[],int dimout);</strong> // return last layer values on out buffer<br />
+    <strong>void getWeightsL1fromL0(int nodeL1,float w[],int dimw);</strong> // return weights array (w[]) from layer 0 to node (n=nodeL1) of layer L1<br />
+    <strong>void getWeightsL2fromL1(int nodeL2,float w[],int dimw);</strong> // return weights array (w[]) from layer 1 to node (n=nodeL2) of layer L2</p>
+  <p><br />
+  </p>
+<h2>Library payload on Arduino Uno</h2> 
+  <p> Some approximate values:</p>
+  <ul>
+    <li>Library: <8K (<25% of program space)</li>
+    <li>Max dimension of Neural Network: about 100 parameters (nodes+weights). For example: 
+        4inp, 10hid, 2out  
+    (no bias)</ul>
+  <p>In any case I suggest you to verify if RAM is not full, by printing immediately the NN instanced. 
+    </p>
+  <p>But, using PROGMEM, the 
+    
+    <!--PageFooterFmt-->
+  RAM required is just for input array(float), hidden array(float) and output array(float).</p>
+  <p>For example it is possible a NN 256 + 100 + 10. People can imagine to train this kind of NN on PC for image management (16x16) and  to use trained net on Arduino Uno, later.</p>
+  <div id="pagefooter">
+    &copy;Arduino | 
+    <a href='#'>Edit Page</a> | <a href='#'>Page History</a> | <a href='#' target='_blank'>Printable View</a> | <a href='http://arduino.cc/en/Site/AllRecentChanges'>All Recent Site Changes</a>
+  </div>
+  <!--/PageFooterFmt-->
+  
+</body>
+</html>

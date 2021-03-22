@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title>NNet Library</title>
+  <link rel="shortcut icon" type="image/x-icon" href="http://arduino.cc/en/favicon.png">
+  <link rel='stylesheet' href='arduinoWideRender.css' 
+type='text/css' />
+<!--HeaderText--><style type='text/css'>
+<!--
+  ul, ol, pre, dl, p {
+	margin-top:0px;
+	margin-bottom:0px;
+	text-align: justify;
+}
+  code { white-space: nowrap; }
+  .vspace { margin-top:1.33em; }
+  .indent { margin-left:40px; }
+  .outdent { margin-left:40px; text-indent:-40px; }
+  a.createlinktext { text-decoration:none; border-bottom:1px dotted gray; }
+  a.createlink { text-decoration:none; position:relative; top:-0.5em;
+    font-weight:bold; font-size:smaller; border-bottom:none; }
+  img { border:0px; }
+  .editconflict { color:green; 
+  font-style:italic; margin-top:1.33em; margin-bottom:1.33em; }
+
+  table.markup { border: 2px dotted #ccf; width:90%; }
+  td.markup1, td.markup2 { padding-left:10px; padding-right:10px; }
+  td.markup1 { border-bottom: 1px solid #ccf; }
+  div.faq { margin-left:2em; }
+  div.faq p.question { margin: 1em 0 0.75em -2em; font-weight:bold; }
+  div.faq hr { margin-left: -2em; }
+   
+    .frame 
+      { border:1px solid #cccccc; padding:4px; background-color:#f9f9f9; }
+    .lfloat { float:left; margin-right:0.5em; }
+    .rfloat { float:right; margin-left:0.5em; }
+a.varlink { text-decoration:none; }
+strong {
+	color: #D6D6D6;
+}
+
+-->
+</style><meta name='robots' content='index,follow' />
+
+  <meta name="verify-v1" content="TtxFIEJAB6zdJ509wLxjnapQzKAMNm9u0Wj4ho6wxIY=" />
+</head>
+<body>
+<div id="page">
+  <!--PageHeaderFmt-->
+  <div id="pageheader">
+<!--    <div class="title"><a href='http://arduino.cc/en'>Arduino</a></div> -->
+    <div class="title"><img src="img/logo.jpg"></div>
+  </div>
+  <!--/PageHeaderFmt-->
+
+  <!--PageLeftFmt-->
+  <div id="pagenav">
+    <div id="navbar">
+  	<p><a class='wikilink' href='http://arduino.cc/en/Main/Buy'>Buy</a>
+<a class='wikilink' href='http://arduino.cc/en/Main/Software'>Download</a>
+<a class='wikilink' href='http://arduino.cc/en/Guide/HomePage'>Getting Started</a>
+<a class='wikilink' href='http://arduino.cc/en/Tutorial/HomePage'>Learning</a>
+<a class='wikilink' href='http://arduino.cc/en/Reference/HomePage'>Reference</a>
+<a class='wikilink' href='http://arduino.cc/en/Main/Hardware'>Hardware</a>
+<a class='wikilink' href='http://arduino.cc/en/Main/FAQ.html'>FAQ</a>
+</p>
+<p class='vspace'></p>
+
+    </div>
+  </div>
+  <!--/PageLeftFmt-->
+
+  <div id="pagetext">
+  <!--PageText-->
+<div id='wikitext'>
+<p>&nbsp;</p>
+<p style="color:#06C; font-size:24px " ><a href="NNet.html">Back to Library</a></p>
+<p style="color:#06C; font-size:24px " ><a href="Examples.html">Back to examples list</a></p>
+<p>&nbsp;</p>
+<h2>Control system</h2>
+<p>A Fuzzy controller is often recently used in place of classical PID controller for small systems. With this approach the control signal is relied on a bi-dimensional and non-linear function of error and its change at each step of control cycle (a sort of derivative). So, way don't use a Neural Network to simulate this function? For this purpose we have to tabulate this function in terms of normalized approach. We can use Fuzzy system to define simple classes for error (E) and error change (CE), and simple rules to define the behaviour. For example, using MATLAB we can define a Fuzzy system with two classes for E and CE like: </p>
+<p><img src="img/FuzzyController.jpg" width="867" height="279" /></p>
+<p>Now we can print this surface (with a resolution 50x50 = 2500 examples) and we can use this file of example to train a NN to approximate this function. We use a NN defined as:</p>
+<p>NNet net(2,2,&quot;NodeTanh&quot;,1,&quot;NodeLin&quot;);</p>
+<p>and after 1000000 training cycles we measure a error &lt; 10<sup>-5</sup>. That means that surface is coincident.</p>
+<p>So, we can use this a controller like this:</p>
+<pre style="line-height:normal; border:double; color:#999">
+<font color="#5e6d03">#include</font> <font color="#005c5f">&#34;NNet.h&#34;</font>
+
+ <font color="#00979c">const</font> <font color="#00979c">PROGMEM</font> <font color="#00979c">struct</font> 
+ <font color="#000000">{</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">dimin</font><font color="#434f54">=</font><font color="#000000">2</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">dimhi</font><font color="#434f54">=</font><font color="#000000">2</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">dimou</font><font color="#434f54">=</font><font color="#000000">1</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">fun1</font><font color="#434f54">=</font><font color="#000000">2</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">int</font> <font color="#000000">fun2</font><font color="#434f54">=</font><font color="#000000">0</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">float</font> <font color="#000000">wgt10</font><font color="#000000">[</font><font color="#000000">2</font><font color="#000000">]</font><font color="#000000">[</font><font color="#000000">2</font><font color="#000000">]</font><font color="#434f54">=</font>
+ &nbsp;<font color="#000000">{</font><font color="#000000">{</font><font color="#000000">0.0031</font><font color="#434f54">,</font> <font color="#434f54">-</font><font color="#000000">2.0110</font><font color="#000000">}</font><font color="#434f54">,</font><font color="#000000">{</font><font color="#434f54">-</font><font color="#000000">2.0180</font><font color="#434f54">,</font> <font color="#000000">0.0037</font><font color="#000000">}</font><font color="#000000">}</font><font color="#000000">;</font>
+ &nbsp;<font color="#00979c">float</font> <font color="#000000">wgt21</font><font color="#000000">[</font><font color="#000000">1</font><font color="#000000">]</font><font color="#000000">[</font><font color="#000000">2</font><font color="#000000">]</font><font color="#434f54">=</font>
+ &nbsp;<font color="#000000">{</font><font color="#000000">{</font><font color="#434f54">-</font><font color="#000000">0.5035</font> <font color="#434f54">,</font> <font color="#434f54">-</font><font color="#000000">0.5028</font> <font color="#000000">}</font><font color="#000000">}</font><font color="#000000">;</font>
+ <font color="#000000">}</font><font color="#000000">pnet</font><font color="#000000">;</font>
+
+<font color="#00979c">float</font> <font color="#000000">inp</font><font color="#000000">[</font><font color="#000000">2</font><font color="#000000">]</font><font color="#000000">;</font>
+<font color="#00979c">NNPGM</font> <font color="#000000">p;</font>              <font color="#434f54">&#47;&#47;p is the pointer to PROGMEM NN structure </font>
+
+<font color="#00979c">void</font> <font color="#5e6d03">setup</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;<b><font color="#d35400">Serial</font></b><font color="#434f54">.</font><font color="#d35400">begin</font><font color="#000000">(</font><font color="#000000">9600</font><font color="#000000">)</font><font color="#000000">;</font>
+<font color="#000000">   p=NNet</font><font color="#434f54">:</font><font color="#434f54">:</font><font color="#000000">initNetPROGMEM</font><font color="#000000">(</font><font color="#434f54">&amp;</font><font color="#000000">pnet</font><font color="#434f54">,false</font><font color="#000000"></font><font color="#434f54">,false</font><font color="#000000"></font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;<font color="#434f54">&#47;&#47; initialize PROGMEM NN structure</font>
+   :
+   :
+<font color="#95a5a6"></font><font color="#000000">}</font>
+
+<font color="#00979c">void</font> <font color="#5e6d03">loop</font><font color="#000000">(</font><font color="#000000">)</font> <font color="#000000">{</font>
+ &nbsp;&nbsp;<font color="#434f54">&#47;&#47;put here your control </font>
+<font color="#000000">}</font>
+
+<font color="#00979c">float</font> <font color="#000000">control</font><font color="#000000">(</font><font color="#00979c">float</font> <font color="#000000">inp</font><font color="#000000">[</font><font color="#000000">2</font><font color="#000000">]</font><font color="#000000">)</font><font color="#434f54">           &#47;&#47; control routine</font>
+<font color="#000000">{</font>
+ &nbsp;<font color="#00979c">float</font> <font color="#000000">out</font><font color="#000000">[</font><font color="#000000">1</font><font color="#000000">]</font><font color="#000000">;</font>
+ &nbsp;<font color="#000000">NNet</font><font color="#434f54">:</font><font color="#434f54">:</font><font color="#000000">forwPROGMEM</font><font color="#000000">(<font color="#434f54"></font></font><font color="#434f54"></font><font color="#000000">p</font><font color="#434f54">,</font><font color="#000000">inp</font><font color="#434f54">,</font><font color="#000000">out</font><font color="#000000">)</font><font color="#000000">;</font> &nbsp;&nbsp;<font color="#434f54">&#47;&#47; execution time = 0.508 millis</font>
+ &nbsp;<font color="#5e6d03">return</font> <font color="#000000">out</font><font color="#000000">[</font><font color="#000000">0</font><font color="#000000">]</font><font color="#000000">;</font>
+<font color="#000000">}</font>
+</pre>
+<p>You can adapt this controller with a Kp,Kd and Kg multiplier constant. Kp for E, Kd for CE and Kg for control signal.</p>
+<p>Because a possible steady state error, you can add a fraction of cumulative (i.e. integral) error to E.</p>
+<pre>
+float sx=0;
+float control(float x,float dx,float kp,float ki,float kd)
+{
+  sx=sx+x;
+  inp[0]=x*kp+sx*hi;
+  inp[1]=dx*kd;
+  NNet::forwPROGMEM(p,inp,out);
+  return out[0];
+} 
+</pre>
+<p><img src="img/StepResponse.jpg" width="708" height="521" /></p>
+<p>&nbsp;</p>
+<p>Example of a simulate tracking (only one dimension) using a first order system (PB) + non-linearities:( Saturation (-70° +70°) and tan function)</p>
+<p><img src="img/Tracking.jpg" width="267" height="217" /><img src="img/TrackingResponse.jpg" width="472" height="355" /></p>
+<p>Kp=2</p>
+<p>Kd=0.3</p>
+<p>Ki=0.7</p>
+<p>Kg=270</p>
+<p>&nbsp;</p>
+<p class='vspace'><!--PageFooterFmt--></p>
+<tr><td  width='55%' valign='top' class="createlink"><div id="pagefooter">
+  &copy;Arduino | 
+  <a href='#'>Edit Page</a> | <a href='#'>Page History</a> | <a href='#' target='_blank'>Printable View</a> | <a href='http://arduino.cc/en/Site/AllRecentChanges'>All Recent Site Changes</a>
+</div>
+  <!--/PageFooterFmt-->
+  
+</body>
+</html>
