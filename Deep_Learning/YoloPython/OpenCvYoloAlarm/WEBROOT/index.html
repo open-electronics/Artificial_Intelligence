@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<Cache-Control: no-cache />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camera Surveillance</title>
+
+<script language="JavaScript">
+
+state = 'OFF'
+newframe = true
+
+function getstate()
+{
+  Req=new XMLHttpRequest(); 
+  Req.open("post","getstate",false); //apre il collegamento
+  Req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+  Req.send(null); //spedisce effettivamente la richiesta
+  state=Req.responseText;
+  el = document.getElementById("state");
+  if (state == "ON")
+    {el.innerHTML = "<h2 style='color:#CF0> Surveillance active! </h2>";}
+  else {el.innerHTML = "<h2 style='color:#C0C'>Surveillance not active! </h2>";}
+}
+function setstate()
+{
+  Req=new XMLHttpRequest(); 
+  Req.open("post","setalarm",false); //apre il collegamento
+  Req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+  Req.send(null); //spedisce effettivamente la richiesta
+  el = document.getElementById("state");
+  el.innerHTML = "<h2 style='color:#CF0'> Surveillance active! </h2>";
+  state=Req.responseText;
+}
+function resetstate()
+{
+  Req=new XMLHttpRequest(); 
+  Req.open("post","resetalarm",false); //apre il collegamento
+  Req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");  
+  Req.send(null); //spedisce effettivamente la richiesta
+  el = document.getElementById("state");
+  el.innerHTML = "<h2 style='color:#C0C'> Surveillance not active! </h3>";
+  state=Req.responseText;
+}
+
+function getframe()
+{
+  newframe = false	
+  im = document.getElementById("imgcam");
+  Req=new XMLHttpRequest();
+  Req.open("post","getframe", true); //apre il collegamento
+  Req.setRequestHeader("Content-Type","application/x-www-form-urlencoded");  
+  Req.onreadystatechange=function() 
+    {if (Req.readyState==4) 
+	  {   
+	      len = Req.getResponseHeader("content-length");
+		  if (len > 0){
+		    res=Req.response;
+		    im.src = 'data:image/jpeg;charset=utf-8;base64,'+res; 
+		    im.src = image.src;}
+	  }
+	}
+  Req.send(null); //spedisce effettivamente la richiesta
+  newframe = true;	
+}
+
+tim = window.setInterval(function()
+ {
+	 //if (state == "ON")
+ {if (newframe) getframe();}}, 
+ 200);
+
+//window.setInterval(stream(), 1000);
+</script>
+
+</head>
+
+<body  bgcolor="#6699CC" text="#FFFF66"  onload="getstate();"  onunload="window.clearInterval(tim);">
+<h1 align="left">Camera Surveillance</h1>
+<div>
+  <input name="start" type="button" value="Start Phone Surveillance" style="font-size:24px" onclick="setstate()"/>
+</div>
+<div id="state" align="left"><h3>Content for  id "state" Goes Here</h3></div>
+<div>
+  <img src='' width="320" height="240" id='imgcam'  />
+</div>
+<p>&nbsp;</p>
+<div>
+  <input name="stop" type="button" value="Stop Phone Surveillance" style="font-size:24px" onclick="resetstate()"/>
+</div>
+</body>
+</html>
