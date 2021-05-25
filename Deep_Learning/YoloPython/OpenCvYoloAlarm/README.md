@@ -19,5 +19,6 @@ A Bot script for smartphone Android is included in PhoneScript directory. For in
 In addition to phone alarm, a simple web-server is implemented. Its addresses (local and public) are sent as phone message. Obviously, for public address connection, port (4000) forward has to be set on router.
 
 A configuration file "**alarmsystem.cfg**" has to be customized (particularly for telegram codes)
+Please note that yolo4.wgt  in darknet directory is split in 10 zip files (because big dimension). So you have to put it back together before use application.
 
 ![Alarm](../../../img/Alarm.jpg)![AlarmSoftware](../../../img/AlarmSoftware.jpg)
