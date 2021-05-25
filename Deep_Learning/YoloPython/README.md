@@ -8,7 +8,8 @@ N.B. For better performance on Jetson OpenCv has to be compiled with CUDA option
 - OpenCvYoloPhoto : script to describe objects in a photo
 - OpenCvYoloAlarm : complete project for a intelligent alarm for detecting intruders
 
-Directory darknet contain configuration and weights for some version of Yolo structures. It has to be positioned as described by  OpenCvYoloCamera and OpenCvYoloPhoto. 
+Directory darknet contain configuration and weights for some version of Yolo structures. It has to be positioned as described by  OpenCvYoloCamera and OpenCvYoloPhoto.
+But because the big dimension of some weights file it has been split in several zip file to put back together (using zip utility)
 
 Yolo networks are trained to recognize COCO 80 classes of objects, except yolo2-tiny-voc that is trained to recognize VOC 20 classes of object .
 
