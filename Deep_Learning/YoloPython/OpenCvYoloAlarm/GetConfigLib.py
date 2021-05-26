@@ -59,12 +59,3 @@ def getValueBooleanFalse(conf, key):
         return True
 
 
-#conf = readConfigParam()
-#printKeys(conf)
-#print(getValueBoolean(conf, 'alarmphone'))
-'''
-val = getValueInt(conf, 'telegramid')
-print(val)
-val = getValue(conf, 'telegramid')
-print(val)
-'''
