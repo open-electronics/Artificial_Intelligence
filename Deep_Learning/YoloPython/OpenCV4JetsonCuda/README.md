@@ -6,6 +6,8 @@ N.B. For better performance on Jetson OpenCv has to be compiled with CUDA option
 
 In this directory there is a link for downloading OpenCV, preconfigured for Jetson Nano and CUDA.  Downloading is external form Github because the file dimension (450MB).
 
+[Link-OpenCV-Cuda](https://drive.google.com/file/d/1OYys3ErAyaH0DgEnMehSAys0QTWPNbE7/view?usp=sharing)
+
 To install OpenCV:
 
 1. Download and decompress file in /home directory.

@@ -26,7 +26,7 @@ async def start(event):
 async def start(event):
     """Alarm sound when the command /alarm is issued."""
     await event.respond('Alarm activated!')
- #   subprocess.call(['play-audio', nomefile])
+    subprocess.call(['play-audio', nomefile])
     print("ALLARME!")
     raise events.StopPropagation
 
