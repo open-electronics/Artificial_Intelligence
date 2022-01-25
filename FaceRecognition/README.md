@@ -21,3 +21,4 @@ Examples:
 - `FaceRecon.py`  Program for face (detect and) recognition (it needs a previous saved face image to recognize)
 - `VerifyPhotos.py`  This program can choose (interactively) reference photo and choose photo to compare.
 - `TestCameraDetect.py`  Program for testing different model for face detecting (HAAR, LBP, HOG, CNN)
+  (please modify path to Haar file and Lbp file inside the python program file o put these files into correct path)
