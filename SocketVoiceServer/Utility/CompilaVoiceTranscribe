@@ -1,0 +1,17 @@
+#!/bin/bash 
+echo "Start compilalation"
+parent="$(dirname "$(pwd)")"
+nohup python -m nuitka \
+  --mode=onefile \
+  --lto=yes \
+  --jobs=$(nproc) \
+  --nofollow-import-to=openwakeword.data \
+  --nofollow-import-to=torch,torchaudio,pandas,matplotlib,IPython,tkinter \
+  --nofollow-import-to=tflite_runtime \
+  --include-package-data=openwakeword \
+  --onefile-tempdir-spec=/tmp/voice_{PID}_{TIME} \
+  --deployment \
+  --output-dir=$parent/binRasp --remove-output \
+$parent/Source/VoiceTranscribe.py 2>&1 &
+
+#removed:   --include-data-files-external=/Models \

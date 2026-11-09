@@ -1,0 +1,14 @@
+#!/bin/bash 
+echo "Start compilalation"
+parent="$(dirname "$(pwd)")"
+nohup python -m nuitka \
+  --mode=onefile \
+  --lto=yes \
+  --jobs=$(nproc) \
+  --onefile-tempdir-spec=/tmp/voice_{PID}_{TIME} \
+  --deployment \
+  --output-dir=$parent/binRasp --remove-output \
+$parent/Source/Vocalize.py 2>&1 &
+
+#removed:   --include-data-files-external=/Models \
+#removed:   --include-data-dir=/usr/lib/aarch64-linux-gnu/espeak-ng-data=./espeak-ng-data \

@@ -1,0 +1,11 @@
+#!/bin/bash 
+echo "Start compilation"
+parent="$(dirname "$(pwd)")"
+nohup python -m nuitka \
+  --mode=onefile \
+  --onefile-tempdir-spec=/tmp/voice_{PID}_{TIME} \
+  --lto=yes \
+  --jobs=$(nproc) \
+  --deployment \
+  --output-dir=$parent/binRasp --remove-output \
+$parent/Source/SocketVoiceServer.py 2>&1 &
