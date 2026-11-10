@@ -1,3 +1,5 @@
+#### Because this repository contains several projects, you can use the utility WEB DownGit (https://downgit.github.io/#/home), to download single directory of repositiory. Put the address of this repository + choosen directory inside the designated field and use buttons.
+address to enter: (https://github.com/open-electronics/Artificial_Intelligence/edit/master/"choosen-directory")
 
 
 ## Artificial Intelligence for experimenter and hobbyist
